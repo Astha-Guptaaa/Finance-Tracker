@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Transactions - FinanceTracker{% endblock %}
+
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">All Transactions</h1>
+    <a href="{{ url_for('transactions.add') }}" class="btn btn-primary btn-icon-split">
+        <span class="icon text-white-50"><i class="bi bi-plus-lg"></i></span>
+        <span class="text">Add Transaction</span>
+    </a>
+</div>
+
+<!-- Filters Row -->
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+        <form method="GET" action="{{ url_for('transactions.index') }}" class="row g-3">
+            <div class="col-md-2">
+                <select name="type" class="form-select">
+                    <option value="">All Types</option>
+                    <option value="Income" {% if filters.type == 'Income' %}selected{% endif %}>Income</option>
+                    <option value="Expense" {% if filters.type == 'Expense' %}selected{% endif %}>Expense</option>
+                    <option value="Received" {% if filters.type == 'Received' %}selected{% endif %}>Received</option>
+                    <option value="Sent" {% if filters.type == 'Sent' %}selected{% endif %}>Sent</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="start_date" class="form-control" value="{{ filters.start_date or '' }}" placeholder="Start Date">
+            </div>
+            <div class="col-md-2">
+                <input type="date" name="end_date" class="form-control" value="{{ filters.end_date or '' }}" placeholder="End Date">
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="search" class="form-control" value="{{ filters.search or '' }}" placeholder="Search by Category/Description">
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-outline-primary w-100">Apply Filters</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Transactions Table -->
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th class="text-end">Amount</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in transactions %}
+                    <tr>
+                        <td>{{ t.transaction_date.strftime('%d %b, %Y') }}</td>
+                        <td class="fw-bold">{{ t.category }}</td>
+                        <td class="text-muted">{{ t.description or '-' }}</td>
+                        <td>
+                            <span class="badge rounded-pill 
+                                {% if t.transaction_type == 'Income' %}bg-success
+                                {% elif t.transaction_type == 'Expense' %}bg-danger
+                                {% elif t.transaction_type == 'Received' %}bg-info
+                                {% else %}bg-warning text-dark{% endif %}">
+                                {{ t.transaction_type }}
+                            </span>
+                        </td>
+                        <td class="text-end fw-bold">${{ "%.2f"|format(t.amount) }}</td>
+                        <td class="text-center">
+                            <a href="{{ url_for('transactions.edit', transaction_id=t.id) }}" class="btn btn-sm btn-outline-secondary me-1">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <form method="POST" action="{{ url_for('transactions.delete', transaction_id=t.id) }}" class="d-inline" onsubmit="return confirm('Delete this transaction?');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger delete-confirm">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 mb-3 d-block"></i>
+                            No transactions found. Start by adding your first one!
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

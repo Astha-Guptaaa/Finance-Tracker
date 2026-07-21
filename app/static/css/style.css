@@ -1,0 +1,117 @@
+/* Custom Styles for Personal Finance Tracker */
+/* Author: Senior Software Engineering Mentor */
+
+:root {
+    --primary-color: #4e73df;
+    --secondary-color: #858796;
+    --success-color: #1cc88a;
+    --info-color: #36b9cc;
+    --warning-color: #f6c23e;
+    --danger-color: #e74a3b;
+    --dark-color: #5a5c69;
+    --light-bg: #f8f9fc;
+}
+
+body {
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--light-bg);
+    color: #5a5c69;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar Customization */
+.navbar {
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%) !important;
+    padding: 0.8rem 1rem;
+}
+
+.navbar-brand {
+    font-weight: 800;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+}
+
+/* Card Enhancements */
+.card {
+    border-radius: 0.75rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Dashboard Balance Card */
+.bg-primary.card {
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%) !important;
+}
+
+/* Progress Bar Customization */
+.progress {
+    border-radius: 10px;
+    background-color: #eaecf4;
+}
+
+.progress-bar {
+    border-radius: 10px;
+}
+
+/* Table Styling */
+.table thead th {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05rem;
+    font-weight: 700;
+    color: #858796;
+    border-top: none;
+}
+
+.table td {
+    padding: 1rem 0.75rem;
+    vertical-align: middle;
+}
+
+/* Form Styling */
+.form-control:focus {
+    border-color: #bac8f3;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+.input-group-text {
+    background-color: #f8f9fc;
+    color: #858796;
+}
+
+/* Badge Customization */
+.badge {
+    padding: 0.5em 0.8em;
+    font-weight: 600;
+}
+
+/* Footer Styling */
+footer {
+    background-color: white;
+    border-top: 1px solid #e3e6f0;
+}
+
+/* Custom Utilities */
+.text-xs { font-size: .7rem; }
+.text-sm { font-size: .85rem; }
+.font-weight-bold { font-weight: 700 !important; }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1.25rem;
+    }
+}

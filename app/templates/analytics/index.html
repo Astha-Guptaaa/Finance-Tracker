@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics - FinanceTracker{% endblock %}
+
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Financial Analytics</h1>
+    <a href="{{ url_for('analytics.export_csv') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="bi bi-download fa-sm text-white-50 me-1"></i> Generate Report (CSV)
+    </a>
+</div>
+
+<div class="row g-4">
+    <!-- Trend Chart -->
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Earnings Overview (Current Year)</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-area" style="height: 320px;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Pie Chart -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Expense Sources (Current Month)</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-pie pt-4 pb-2" style="height: 250px;">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+                <div class="mt-4 text-center small">
+                    <span class="mr-2">
+                        <i class="bi bi-circle-fill text-primary"></i> Top categories shown
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Data passed from Flask
+        const months = {{ months|tojson }};
+        const incomeData = {{ income_data|tojson }};
+        const expenseData = {{ expense_data|tojson }};
+        const catLabels = {{ cat_labels|tojson }};
+        const catValues = {{ cat_values|tojson }};
+        
+        // Initialize charts via main.js helper
+        initAnalyticsCharts(months, incomeData, expenseData, catLabels, catValues);
+    });
+</script>
+{% endblock %}
