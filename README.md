@@ -1,6 +1,6 @@
-# Personal Finance Tracker
+# Finance Tracker
 
-A full-stack personal finance management application built with Python (Flask), MySQL, Bootstrap 5, and Chart.js.
+A full-stack finance management application built with Python (Flask), MySQL, Bootstrap 5, and Chart.js.
 
 ## Features
 - **User Authentication**: Secure registration and login with password hashing.
